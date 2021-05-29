@@ -39,6 +39,11 @@ h1 {
     z-index: -1;
 }
 
+.webgl {
+    position: absolute;
+    outline: none;
+}
+
 .main-title {
     /* width: 75%; */
     position: absolute;
@@ -71,3 +76,4 @@ h1 {
     width: 30%;
     display: block;
 }
+
