@@ -6,13 +6,13 @@ timeline
   .fromTo(".scene", { y: 0 }, { y: -50, duration: 3 }, "-=3")
   .fromTo(".middle", { y: 0 }, { y: -30, duration: 3 }, "-=3")
   .fromTo(".bg", { y: -30 }, { y: 0, duration: 3 }, "-=3")
-  .to(".content-wrapper", 3, { top: "-50" }, "-=3");
-
-// timeline.fromTo(
-//   ".text",
-//   { y: -25, opacity: 0 },
-//   { y: 0, opacity: 1, duration: 2 }
-// );
+  .to(".content-wrapper", 3, { top: "-50" }, "-=3")
+  .fromTo(
+    ".text",
+    { y: -60, opacity: 0 },
+    { y: 0, opacity: 1, duration: 2 },
+    "-=1"
+  );
 
 let scrollScene = new ScrollMagic.Scene({
   triggerElement: "section",
@@ -80,19 +80,53 @@ function init() {
 
     scene.add(gltf.scene);
     icecream = gltf.scene.children[0];
-    animate();
+    tick();
   });
 }
 
-function animate() {
-  requestAnimationFrame(animate);
-  icecream.rotation.z += 0.01;
+// Interactivity
+
+let mouseX = 0;
+let mouseY = 0;
+
+let targetX = 0;
+let targetY = 0;
+
+const windowHalfX = window.innerWidth / 2;
+const windowHalfY = window.innerHeight / 2;
+
+const onDocumentMouseMove = (event) => {
+  mouseX = event.clientX - windowHalfX;
+  mouseY = event.clientY - windowHalfY;
+};
+
+document.addEventListener("mousemove", onDocumentMouseMove);
+
+// function animate() {
+//   requestAnimationFrame(animate);
+//   targetX = mouseX * 0.01;
+//   targetY = mouseY * 0.01;
+//   icecream.rotation.z += 0.05;
+//   icecream.rotation.z += 0.05 * (targetX - icecream.rotation.z);
+
+//   renderer.render(scene, camera);
+// }
+
+const clock = new THREE.Clock();
+
+function tick() {
+  const elapsedTime = clock.getElapsedTime();
+  targetX = mouseX * 0.005;
+  targetY = mouseY * 0.005;
+  icecream.rotation.z = 0.5 * elapsedTime;
+  icecream.rotation.z += 0.4 * (targetX - icecream.rotation.z * 2);
+
   renderer.render(scene, camera);
+  requestAnimationFrame(tick);
 }
 
-init();
-
 function onWindowResize() {
+  console.log("resize runs");
   camera.aspect = container.clientWidth / container.clientHeight;
   camera.updateProjectionMatrix();
 
@@ -100,3 +134,6 @@ function onWindowResize() {
 }
 
 window.addEventListener("resize", onWindowResize);
+
+init();
+tick();
