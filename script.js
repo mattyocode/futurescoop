@@ -5,13 +5,13 @@ timeline
   .fromTo(".fore", { y: 30 }, { y: -60, duration: 3 })
   .fromTo(".scene", { y: 0 }, { y: -50, duration: 3 }, "-=3")
   .fromTo(".middle", { y: 0 }, { y: -30, duration: 3 }, "-=3")
-  .fromTo(".bg", { y: -30 }, { y: 0, duration: 3 }, "-=3")
+  .fromTo(".bg", { y: -50 }, { y: 0, duration: 3 }, "-=3")
   .to(".content-wrapper", 3, { top: "-50" }, "-=3")
   .fromTo(
     ".text",
     { y: -60, opacity: 0 },
-    { y: 0, opacity: 1, duration: 2 },
-    "-=1"
+    { y: 0, opacity: 1, duration: 3 },
+    "-=2"
   );
 
 let scrollScene = new ScrollMagic.Scene({
@@ -118,7 +118,7 @@ function tick() {
   const elapsedTime = clock.getElapsedTime();
   targetX = mouseX * 0.005;
   targetY = mouseY * 0.005;
-  icecream.rotation.z = 0.5 * elapsedTime;
+  icecream.rotation.z = elapsedTime;
   icecream.rotation.z += 0.4 * (targetX - icecream.rotation.z * 2);
 
   renderer.render(scene, camera);
