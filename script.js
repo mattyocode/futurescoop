@@ -2,11 +2,11 @@ let controller = new ScrollMagic.Controller();
 let timeline = new TimelineMax();
 
 timeline
-  .fromTo(".fore", { y: 30 }, { y: -50, duration: 3 })
+  .fromTo(".fore", { y: 30 }, { y: -60, duration: 3 })
   .fromTo(".scene", { y: 0 }, { y: -50, duration: 3 }, "-=3")
   .fromTo(".middle", { y: 0 }, { y: -30, duration: 3 }, "-=3")
-  .fromTo(".bg", { y: -30 }, { y: 10, duration: 3 }, "-=3")
-  .to(".content", 3, { top: "-50" }, "-=3");
+  .fromTo(".bg", { y: -30 }, { y: 0, duration: 3 }, "-=3")
+  .to(".content-wrapper", 3, { top: "-50" }, "-=3");
 
 // timeline.fromTo(
 //   ".text",
@@ -48,13 +48,13 @@ function init() {
   camera.position.set(0, 0, 175);
 
   // Ambient light
-  const ambient = new THREE.AmbientLight(0x404040, 3); // args = color & intensity
+  const ambient = new THREE.AmbientLight(0x404040, 2.5); // args = color & intensity
   scene.add(ambient);
 
   // Directional light
-  //   const light = new THREE.DirectionalLight(0xffffff, 3);
-  //   light.position.set(10, 10, 250);
-  //   scene.add(light);
+  const light = new THREE.DirectionalLight(0x222222, 1.5);
+  light.position.set(10, 10, 250);
+  scene.add(light);
 
   // Renderer
   renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // edges blurred slightly to look smooth when moving/zooming

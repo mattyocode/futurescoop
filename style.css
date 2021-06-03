@@ -15,8 +15,8 @@
 }
 
 nav {
-    font-size: 0.5rem;
-    position:absolute;
+    font-size: 1.5rem;
+    position: absolute;
     width: 100%;
     display: flex;
     padding: 0.5rem 1rem;
@@ -29,31 +29,37 @@ h1 {
 
 .container {
     height: 100vh;
+    width: 100%;
     /* background: black; */
 }
 .container img {
     position: absolute;
     width: 100%;
-    height: 110vh;
+    height: 100vh;
     object-fit: cover;
 }
 
 .bg {
     z-index: -4;
+    width: auto;
+    height: 100vh;
 }
 
 .middle {
     z-index: -3;
+    width: auto;
 }
 
 .fore {
     z-index: -1;
+    width: auto;
 }
 
 .scene,
 canvas {
     position: absolute;
-    z-index: -3;
+    z-index: -2;
+    top: -50px;
     width: 100%;
     height: 100%;
 }
@@ -63,31 +69,44 @@ canvas {
     position: absolute;
     top: 70%;
     left: 50%;
-    font-size: 2.5rem;
+    font-size: 6rem;
     text-align: center;
     transform: translate(-50%, -50%)
+}
+
+.blur-transition-block {
+    width: 100%;
+    background-image: linear-gradient(to top, rgba(34, 34, 34, 1), rgba(34, 34, 34, 0));
+    min-height: 20vh;
+    z-index: 2;
+    position: relative;
+}
+
+.content-wrapper {
+    width: 100%;
+    min-height: 110vh;
+    z-index: 2;
+    position: absolute;
 }
 
 .content {
     width: 100%;
     background: #222;
-    min-height: 100vh;
-    z-index: 2;
-    position: absolute;
+    min-height: 110vh;
 }
 
 .content h3 {
-    font-size: small;
-    padding: 2rem;
+    font-size: 1.5rem;
+    padding: 4rem;
     width: 70%;
     margin: 0 auto;
     text-align: center;
 }
 
 .content p {
-    font-size: 0.45rem;
-    margin: 2rem;
-    width: 30%;
+    font-size: 1rem;
+    margin: 5% 10%;
+    /* width: 20%; */
     display: block;
 }
 
