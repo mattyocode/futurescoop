@@ -1,11 +1,9 @@
-// import "./style.css";
-// import * as THREE from "three";
-
 let controller = new ScrollMagic.Controller();
 let timeline = new TimelineMax();
 
 timeline
   .fromTo(".fore", { y: 30 }, { y: -50, duration: 3 })
+  .fromTo(".scene", { y: 0 }, { y: -50, duration: 3 }, "-=3")
   .fromTo(".middle", { y: 0 }, { y: -30, duration: 3 }, "-=3")
   .fromTo(".bg", { y: -30 }, { y: 10, duration: 3 }, "-=3")
   .to(".content", 3, { top: "-50" }, "-=3");
@@ -16,7 +14,7 @@ timeline
 //   { y: 0, opacity: 1, duration: 2 }
 // );
 
-let scene = new ScrollMagic.Scene({
+let scrollScene = new ScrollMagic.Scene({
   triggerElement: "section",
   duration: "200%",
   triggerHook: 0, // between 0 and 1
@@ -25,43 +23,80 @@ let scene = new ScrollMagic.Scene({
   .setPin("section")
   .addTo(controller);
 
-const canvas = document.querySelector("canvas.webgl");
+// Variables for set up
 
-const loader = new THREE.GLTFLoader();
-loader.load(
-  "./assets/scene.gltf",
-  function (gltf) {
-    THREE.Scene.add(gltf.scene);
+let container;
+let camera;
+let renderer;
+let scene;
+let icecream;
 
-    gltf.animations;
-    gltf.scene;
-    gltf.scenes; // Array<THREE.Group>
-    gltf.cameras; // Array<THREE.Camera>
-    gltf.asset; // Object
-  },
-  // called while loading is progressing
-  function (xhr) {
-    console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-  },
-  // called when loading has errors
-  function (error) {
-    console.log("An error happened");
-  }
-);
+function init() {
+  container = document.querySelector(".scene");
 
-const threeScene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(
-  75,
-  window.innerWidth / window.innerHeight,
-  0.1,
-  1000
-);
-const renderer = new THREE.WebGLRenderer();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+  // Create scene
+  scene = new THREE.Scene();
+
+  // Camera set up
+  const fov = 35; // field of view in degrees
+  const aspect = container.clientWidth / container.clientHeight;
+
+  // clipping distance range in which you can see objects
+  const near = 0.1;
+  const far = 500;
+  camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+  camera.position.set(0, 0, 175);
+
+  // Ambient light
+  const ambient = new THREE.AmbientLight(0x404040, 3); // args = color & intensity
+  scene.add(ambient);
+
+  // Directional light
+  //   const light = new THREE.DirectionalLight(0xffffff, 3);
+  //   light.position.set(10, 10, 250);
+  //   scene.add(light);
+
+  // Renderer
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); // edges blurred slightly to look smooth when moving/zooming
+  renderer.setSize(container.clientWidth, container.clientHeight);
+  renderer.setPixelRatio(window.devicePixelRatio);
+
+  container.appendChild(renderer.domElement);
+
+  // Load model
+
+  let loader = new THREE.GLTFLoader();
+  loader.load("./3d/scene.gltf", function (gltf) {
+    // gltf.scene.traverse(function (child) {
+    //   if (child.isMesh) {
+    //     child.geometry.center();
+    //   }
+    // });
+    const box = new THREE.Box3().setFromObject(gltf.scene);
+    const center = box.getCenter(new THREE.Vector3());
+    gltf.scene.position.x += gltf.scene.position.x = center.x;
+    gltf.scene.position.y += gltf.scene.position.y = center.y;
+    gltf.scene.position.z += gltf.scene.position.z = center.z;
+
+    scene.add(gltf.scene);
+    icecream = gltf.scene.children[0];
+    animate();
+  });
+}
 
 function animate() {
   requestAnimationFrame(animate);
-  renderer.render(threeScene, camera);
+  icecream.rotation.z += 0.01;
+  renderer.render(scene, camera);
 }
-animate();
+
+init();
+
+function onWindowResize() {
+  camera.aspect = container.clientWidth / container.clientHeight;
+  camera.updateProjectionMatrix();
+
+  renderer.setSize(container.clientWidth, container.clientHeight);
+}
+
+window.addEventListener("resize", onWindowResize);
