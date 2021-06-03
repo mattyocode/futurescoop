@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "scrollmagic": "^2.0.8",
     "three": "^0.129.0"
   }
 }
