@@ -10,6 +10,12 @@
     display: flex;
 }
 
+@media screen and (max-width: 768px) {
+    .even-columns{
+        flex-wrap: wrap;
+    }
+}
+
 .even-columns > * {
     flex-basis: 100%;
 }
@@ -106,7 +112,6 @@ canvas {
 .content p {
     font-size: 1rem;
     margin: 5% 10%;
-    /* width: 20%; */
-    display: block;
+    display: inline;
 }
 
