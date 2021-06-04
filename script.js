@@ -9,9 +9,9 @@ timeline
   .to(".content-wrapper", 3, { top: "-50" }, "-=3")
   .fromTo(
     ".text",
-    { y: -60, opacity: 0 },
-    { y: 0, opacity: 1, duration: 3 },
-    "-=2"
+    { y: -25, opacity: 0 },
+    { y: 0, opacity: 1, duration: 2 },
+    "-=1"
   );
 
 let scrollScene = new ScrollMagic.Scene({
@@ -38,7 +38,7 @@ function init() {
   scene = new THREE.Scene();
 
   // Camera set up
-  const fov = 35; // field of view in degrees
+  const fov = 40; // field of view in degrees
   const aspect = container.clientWidth / container.clientHeight;
 
   // clipping distance range in which you can see objects
@@ -52,8 +52,8 @@ function init() {
   scene.add(ambient);
 
   // Directional light
-  const light = new THREE.DirectionalLight(0x222222, 1.5);
-  light.position.set(10, 10, 250);
+  const light = new THREE.DirectionalLight(0x1d3c56, 1.5);
+  light.position.set(100, 100, 250);
   scene.add(light);
 
   // Renderer
