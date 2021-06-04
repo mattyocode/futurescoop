@@ -52,8 +52,8 @@ function init() {
   scene.add(ambient);
 
   // Directional light
-  const light = new THREE.DirectionalLight(0x1d3c56, 1.5);
-  light.position.set(100, 100, 250);
+  const light = new THREE.DirectionalLight(0x1d3c56, 2);
+  light.position.set(0, -250, 100);
   scene.add(light);
 
   // Renderer
@@ -126,7 +126,6 @@ function tick() {
 }
 
 function onWindowResize() {
-  console.log("resize runs");
   camera.aspect = container.clientWidth / container.clientHeight;
   camera.updateProjectionMatrix();
 

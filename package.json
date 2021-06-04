@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "main": "script.js",
   "type": "module",
-  "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "gsap": "^3.6.1",
     "scrollmagic": "^2.0.8",
     "three": "^0.129.0"
   },

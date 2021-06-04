@@ -36,10 +36,10 @@ h1 {
 .container {
     height: 100vh;
     width: 100%;
-    /* background: black; */
 }
 .container img {
     position: absolute;
+
     width: 100%;
     height: 100vh;
     object-fit: cover;
@@ -47,18 +47,24 @@ h1 {
 
 .bg {
     z-index: -4;
-    width: auto;
-    height: 100vh;
+}
+
+@media screen and (min-width: 1500px) {
+    .container img {
+        object-fit: unset;
+    }
+    .bg {
+        object-fit: cover;
+    }
+    
 }
 
 .middle {
     z-index: -3;
-    width: auto;
 }
 
 .fore {
     z-index: -1;
-    width: auto;
 }
 
 .scene,
@@ -111,7 +117,7 @@ canvas {
 }
 
 .content h3 {
-    font-size: 1.5rem;
+    font-size: 2rem;
     padding: 4rem;
     padding-top: 6rem;
     width: 70%;
